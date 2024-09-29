@@ -9,7 +9,7 @@ public class GradeBook {
     private String patronymic;
     private int course;
     private int group;
-    private List<Session> sessions = new ArrayList<>();
+    List<Session> sessions = new ArrayList<>();
 
     public class Session {
         private int sessionNumber;
