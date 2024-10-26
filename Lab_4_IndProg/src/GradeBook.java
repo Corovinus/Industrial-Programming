@@ -1,3 +1,7 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.util.JacksonFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +19,21 @@ public class GradeBook {
     private int studakNumber;
     List<Session> sessions = new ArrayList<>();
     /////////////////////////////Вложенные классы
-    public class Session {
+    public static class Session {
         private int sessionNumber;
         private List<Exam> exams = new ArrayList<>();
+
+        public int getSessionNumber() {
+            return sessionNumber;
+        }
+
+        public void setExams(List<Exam> exams) {
+            this.exams = exams;
+        }
+
+        public void setSessionNumber(int sessionNumber) {
+            this.sessionNumber = sessionNumber;
+        }
 
         public void addExam(String lesson, int grade) {
             exams.add(new Exam(lesson, grade));
@@ -37,7 +53,7 @@ public class GradeBook {
         }
     }
 
-    public class Exam {
+    public static class Exam {
         private String lesson;
         private int grade;
 
@@ -46,6 +62,8 @@ public class GradeBook {
             this.grade = grade;
         }
 
+        public Exam() {}
+
         public String getLesson() {
             return lesson;
         }
@@ -53,6 +71,15 @@ public class GradeBook {
         public int getGrade() {
             return grade;
         }
+
+        public void setGrade(int grade) {
+            this.grade = grade;
+        }
+
+        public void setLesson(String lesson) {
+            this.lesson = lesson;
+        }
+
     }
 
     //////////////////////////////Методы
@@ -64,6 +91,7 @@ public class GradeBook {
         }
         return null;
     }
+
     private static GradeBook findGradeBookByStudak(List<GradeBook> myList, int studakNumber) {
         for (GradeBook gradeBook : myList) {
             if (gradeBook.studakNumber == studakNumber) {
@@ -120,7 +148,7 @@ public class GradeBook {
                 if (student != null) {
                     GradeBook.Session session = student.findSessionByNumber(semester);
                     if (session == null) {
-                        session = student.new Session();
+                        session = new GradeBook.Session();
                         session.sessionNumber = semester;
                         student.sessions.add(session);
                     }
@@ -186,7 +214,71 @@ public class GradeBook {
             System.out.println("Файл не найден");
         }
     }
+
+    public static void writeJSON(List<GradeBook> gradeBooks, String outputFile) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(new File(outputFile), gradeBooks);
+    }
+
+    public static void readJSON(List<GradeBook> gradeBooks, String inputFile) throws IOException {
+        List<GradeBook> importedGradeBooks = new ObjectMapper().readValue(new File(inputFile), new TypeReference<>() {});
+        gradeBooks.clear();
+        gradeBooks.addAll(importedGradeBooks);
+    }
     public String getSurname() {
         return surname;
     }
+
+    public int getCourse() {
+        return course;
+    }
+    public int getGroup() {
+        return group;
+    }
+
+    public int getStudakNumber() {
+        return studakNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
+    }
+
+    public void setStudakNumber(int studakNumber) {
+        this.studakNumber = studakNumber;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public GradeBook() {}
 }

@@ -1,9 +1,10 @@
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.IOException;
 import java.util.*;
 import java.io.File;
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<GradeBook> gradeBooks = new ArrayList<>();
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File("C:\\Users\\GIGABYTE\\Industrial-Programming\\Lab_4_IndProg"));
@@ -26,8 +27,11 @@ public class Main {
                 GradeBook.importExamReport(gradeBooks, file.getName());
             }
         }
-
+        GradeBook.writeJSON(gradeBooks, "students.json");
         GradeBook.outStudentList(gradeBooks);
+        List<GradeBook> inputList = new ArrayList<>();
+        GradeBook.readJSON(inputList, "students.json");
+        System.out.println(inputList);
         GradeBook.writeHonorStudentsToFile("output.txt", gradeBooks);
     }
 }
