@@ -1,50 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.io.*;
-import java.io.BufferedReader;
+import java.util.List;
+
 public class Main {
-    public static void main(String[] args) throws IOException {
-        File inputFile = new File("input.txt");
-        File outputFile = new File("output.txt");
+    public static void main(String[] args) {
+        try {
+            FileHandler fileHandler = new FileHandler("input.txt", "output.txt");
+            TextProcessor textProcessor = new TextProcessor();
 
-        List<String> lines = new ArrayList<>();
+            List<String> lines = fileHandler.readLines();
 
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print("Введите позицию буквы для замены (k): ");
+            int k = Integer.parseInt(inputReader.readLine());
 
-        String line;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
+            System.out.print("Введите строку для замены: ");
+            String replaceString = inputReader.readLine();
+
+            List<String> processedLines = textProcessor.replaceCharacters(lines, k, replaceString);
+
+            fileHandler.writeLines(processedLines);
+
+            System.out.println("Результат записан в файл: " + fileHandler.getOutputFilePath());
+        } catch (IOException e) {
+            System.err.println("Ошибка ввода-вывода: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("Неверный формат числа: " + e.getMessage());
         }
-        reader.close();
-
-        BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.print("Введите позицию буквы для замены (k): ");
-        int k = Integer.valueOf(inputReader.readLine());
-
-        System.out.print("Введите строку для замены: ");
-        String replaceString = inputReader.readLine();
-
-        List<String> endLines = new ArrayList<>();
-
-        for (String l : lines) {
-            String[] words = l.split("\\s+");
-            for (int i = 0; i < words.length; i++) {
-                if (words[i].length() >= k) {
-                    String modifiedWord = words[i].substring(0, k - 1) + replaceString + words[i].substring(k);
-                    words[i] = modifiedWord;
-                }
-            }
-            endLines.add(String.join(" ", words));
-        }
-
-        for (String endLine : endLines) {
-            writer.write(endLine);
-            writer.newLine();
-        }
-
-        writer.close();
-        System.out.println("Результат записан в файл: " + outputFile);
     }
 }
