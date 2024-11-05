@@ -5,27 +5,33 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Enter x");
+        System.out.print("Enter x: ");
         double x = in.nextDouble();
-        System.out.println("Enter k");
+        System.out.print("Enter k: ");
         int k = in.nextInt();
+        in.close();
 
-        double Answer = Math.exp(x);
+        double answer = Math.exp(x);
+        System.out.printf("Not my Answer:\t%." + k + "f%n", answer);
 
-        String formattedAnswer = String.format("%." + k + "f", Answer);
-        System.out.println("Not my Answer\t" + formattedAnswer);
+        double approximation = Exponenta.calculateExponential(x, k);
+        System.out.printf("My Answer:\t\t%." + k + "f%n", approximation);
+    }
+}
 
-        double myAnswer = 1.0;
+class Exponenta {
+    public static double calculateExponential(double x, int k) {
+        double result = 1.0;
         double term = 1.0;
         int i = 1;
+        double tolerance = Math.pow(10, -k);
 
         do {
             term *= x / i;
-            myAnswer += term;
+            result += term;
             i++;
-        } while (Math.abs(term) >= Math.pow(10, -k));
+        } while (Math.abs(term) > tolerance);
 
-        String formattedMyAnswer = String.format("%." + k + "f", myAnswer);
-        System.out.println("My Answer\t\t" + formattedMyAnswer);
+        return result;
     }
 }
