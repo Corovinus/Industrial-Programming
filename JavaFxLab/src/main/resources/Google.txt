@@ -1,0 +1,2 @@
+Google Pixel,500
+Chromebook,800

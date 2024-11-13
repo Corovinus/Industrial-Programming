@@ -1,0 +1,2 @@
+Tesla Model Car,50000
+Powerbank,100
