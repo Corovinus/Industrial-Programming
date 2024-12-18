@@ -68,6 +68,7 @@ CREATE TABLE people (
     Age INT,
     sort_order INT
 );
+```
 2. Конфигурация приложения
 В классе DataBaseConnection укажите параметры подключения:
 
