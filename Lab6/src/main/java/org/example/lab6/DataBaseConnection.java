@@ -15,7 +15,7 @@ public class DataBaseConnection {
     public Connection getConnection(){
         Connection connection = null;
         try{
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SortingDB","root","Sapun129");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SortingDB","root","");
         }
         catch(SQLException e){
             System.out.println(e.getErrorCode());

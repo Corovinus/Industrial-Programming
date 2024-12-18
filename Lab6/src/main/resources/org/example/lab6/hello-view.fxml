@@ -23,7 +23,7 @@
         <children>
             <Button fx:id="LoadButton" mnemonicParsing="false" onAction="#onLoadButtonClick" text="Load" />
             <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
-            <Button fx:id="SortButton" mnemonicParsing="false" text="Sort" />
+            <Button fx:id="SortButton" mnemonicParsing="false" onAction="#onSortButtonClick" text="Sort" />
             <Button fx:id="AddButton" onAction="#onAddButtonClick" text="Добавить" />
         </children>
     </HBox>
