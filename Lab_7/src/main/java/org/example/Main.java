@@ -32,7 +32,7 @@ public class Main {
             Thread thread = new Thread(sortThread);
             thread.start();
 
-            thread.join();
+           // thread.join();
 
             System.out.println("Отсортированный массив:");
             printArray(array);
